@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react';
+import './App.scss'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface IState {
+  initCardNum: Number,
+  cardList: Array<any>
 }
+export default class AutoFocusInput extends Component <any, IState> {
 
-export default App;
+  readonly state = {
+    initCardNum: 3,
+    cardList: []
+  }
+  creatCardList =()=>{
+    return Array(5).fill('').map((item, index) => ({
+      index
+    }))
+  }
+  add = ()=>{
+    let {cardList}= this.state;
+    console.log('cardList', cardList)
+    this.setState(
+        {
+          cardList:cardList
+        }
+    );
+  }
+  componentDidMount() {
+    let cardList = this.creatCardList();
+    this.setState(
+        {
+          cardList:cardList
+        }
+    );
+  }
+
+  render() {
+    let { cardList } = this.state;
+    return <div className='page'>
+      <div onClick={this.add}>
+        新增
+      </div>
+      <div className='card-container'>
+        {
+          cardList.map((value,index)=>{
+            return  <div className='card-item' key={index}>
+              <div className='title'>
+
+              </div>
+            </div>
+          })
+        }
+      </div>
+    </div>
+  }
+}
